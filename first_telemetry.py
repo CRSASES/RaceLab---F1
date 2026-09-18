@@ -18,59 +18,43 @@ session.load()
 lap = session.laps.pick_drivers("VER").pick_fastest()
 
 # We obtain telemetry
+plt.style.use("dark_background")
 telemetry = lap.get_car_data().add_distance()
 
 print(telemetry.head())
 
-plt.figure(figsize=(14,5))
-
-plt.plot(
+# Speed, Accelerator and Brake graph
+fig, ax = plt.subplots(3, figsize=(14,8), sharex=True)
+# Speed
+ax[0].plot(
     telemetry['Distance'],
     telemetry['Speed'],
     color='red'
 )
 
-plt.title("Verstappen's Speed - 2025 Monza Qualifying")
-plt.xlabel("Distance (m)")
-plt.ylabel("Speed (km/h)")
-
-plt.grid(True)
-
-# Accelerator and brake graph
-fig, ax = plt.subplots(2, figsize=(14,8), sharex=True)
+ax[0].set_title("Verstappen's Speed - 2025 Monza Qualifying")
+ax[0].set_xlabel("Distance (m)")
+ax[0].set_ylabel("Speed (km/h)")
 
 # Accelerator
-ax[0].plot(
+ax[1].plot(
     telemetry['Distance'],
     telemetry['Throttle'],
     color='green'
 )
 
-ax[0].set_title("Accelerator")
+ax[1].set_title("Accelerator")
 
 # Brake
-ax[1].plot(
+ax[2].plot(
     telemetry['Distance'],
     telemetry['Brake'],
     color='orange'
 )
 
-ax[1].set_title("Brake")
+ax[2].set_title("Brake")
 
 plt.xlabel("Distance (m)")
 
-plt.style.use("dark_background")
-
-plt.figure(figsize=(14,5))
-
-plt.plot(
-    telemetry['Distance'],
-    telemetry['Speed'],
-    linewidth=2
-)
-
-plt.title("RaceLab - Telemetry F1")
-plt.xlabel("Distance")
-plt.ylabel("Speed")
-
+plt.grid(True)
 plt.show()
