@@ -23,6 +23,12 @@ plt.style.use("dark_background")
 telemetry_ver = lap_ver.get_car_data().add_distance()
 telemetry_nor = lap_nor.get_car_data().add_distance()
 
+position_ver = lap_ver.get_pos_data()
+
+print(position_ver.head())
+
+
+
 print("Verstappen lap:", lap_ver["LapTime"])
 print("Norris lap:", lap_nor["LapTime"])
 
@@ -65,7 +71,6 @@ ax[1].plot(
 )
 
 ax[1].set_title("Accelerator")
-ax[1].legend()
 
 # Brake
 ax[2].plot(
@@ -80,9 +85,26 @@ ax[2].plot(
 )
 
 ax[2].set_title("Brake")
-ax[2].legend()
 
 plt.xlabel("Distance (m)")
 
 plt.grid(True)
+plt.show()
+
+# Circuit map
+fig2, ax2 = plt.subplots(figsize=(10, 8))
+
+ax2.plot(
+    position_ver["X"],
+    position_ver["Y"]
+)
+
+ax2.set_title("RaceLab - Monza Circuit")
+ax2.set_xlabel("X")
+ax2.set_ylabel("Y")
+
+ax2.grid(True)
+# With this, the circuit will look the same
+ax2.set_aspect("equal")
+
 plt.show()
